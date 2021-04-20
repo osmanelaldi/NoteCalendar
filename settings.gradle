@@ -1,0 +1,2 @@
+rootProject.name = "NoteCalendar"
+include ':app'
