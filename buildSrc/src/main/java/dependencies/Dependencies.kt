@@ -30,4 +30,5 @@ object Dependencies {
     val retrofit_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit2_version}"
     val joda = "net.danlew:android.joda:${Versions.joda_version}"
     val calendar = "com.github.kizitonwose:CalendarView:${Versions.calendar_version}"
+    val desugar = "com.android.tools:desugar_jdk_libs:${Versions.desugar_version}"
 }

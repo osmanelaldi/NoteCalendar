@@ -6,7 +6,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id 'com.google.firebase.crashlytics'
     id 'com.google.gms.google-services'
 }
 
@@ -15,6 +14,7 @@ android {
     buildToolsVersion Versions.buildTools_version
 
     defaultConfig {
+        multiDexEnabled true
         applicationId Application.id
         minSdkVersion Versions.minsdk
         targetSdkVersion Versions.targetsdk
@@ -61,7 +61,8 @@ dependencies {
     implementation Dependencies.firebase_auth
     implementation Dependencies.kotlin_coroutines_play_services
     implementation Dependencies.firebase_analytics
-    implementation Dependencies.firebase_crashlytics
+    implementation Dependencies.joda
+    implementation Dependencies.calendar
     implementation AndroidTestDependencies.idling_resource
 
     implementation SupportDependencies.swipe_refresh_layout

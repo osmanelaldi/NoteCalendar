@@ -1,11 +1,11 @@
 package dependencies
 
 object Versions {
-    val gradle = "3.5.3"
+    val gradle = "4.2.0"
     val buildTools_version = "30.0.3"
-    val compilesdk = 29
-    val minsdk = 21
-    val targetsdk = 29
+    val compilesdk = 30
+    val minsdk = 26
+    val targetsdk = 30
     val kotlin = "1.3.61"
     val ktx = "1.2.0"
     val dagger = "2.25.4"
@@ -40,4 +40,5 @@ object Versions {
     val crashlytics_gradle = "2.1.0"
     val joda_version = "2.10.9.1"
     val calendar_version = "1.0.3"
+    val desugar_version = "1.0.9"
 }
