@@ -63,11 +63,11 @@ class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes){
 
     fun dummy() : List<Note>{
         return listOf(
-            Note("1","Sınav", listOf(
+            Note("1","Sınav","Matematik Sınavı",listOf(
                 SubNote("Üniteleri bul","yardım al birinden"),
                 SubNote("Konulara çalış")
             ),"21-01-2020 16:00"),
-            Note("2","Sınav Günü", listOf(
+            Note("2","Sınav Günü","Amfi katında",listOf(
                 SubNote("Kahvaltı yap"),
                 SubNote("Yola çık","Metrobüsler boş")
             ),"22-01-2020 08:00")

@@ -45,6 +45,10 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
         holder.itemView.cl_root.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, getBackgroundColor(position)))
         holder.itemView.tv_note.text = note.title
         holder.itemView.tv_date.text = DateUtils.getDateWithFormat(note.date, DF.DATE_FORMAT, DF.HOUR_FORMAT)
+        note.description?.let {
+            holder.itemView.tv_note_description.visibility = View.VISIBLE
+            holder.itemView.tv_note_description.text = note.description
+        }
         val expandedVisibility = if (note.isExpanded) View.VISIBLE else View.GONE
         holder.itemView.btn_delete.visibility = expandedVisibility
         holder.itemView.btn_edit.visibility = expandedVisibility
@@ -69,9 +73,8 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
                ContextCompat.getColor(holder.itemView.context,R.color.dark))
            spannable.setSpan(bulletSpan, 0,subNote.note.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
            view.tv_sub_note.text = spannable
-           val hasCommand = subNote.comment.isNotEmpty()
-           if (hasCommand){
-               view.tv_sub_note_comment.text = holder.itemView.context.getString(R.string.brackets_format, subNote.comment)
+           subNote.comment?.let { comment->
+               view.tv_sub_note_comment.text = holder.itemView.context.getString(R.string.brackets_format, comment)
                view.tv_sub_note_comment.visibility = View.VISIBLE
            }
            holder.itemView.ll_sub_note.addView(view)

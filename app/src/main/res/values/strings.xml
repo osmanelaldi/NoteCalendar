@@ -11,4 +11,8 @@
     <string name="sub_note">SubNote</string>
     <string name="date">Date</string>
     <string name="apply">Apply</string>
+    <string name="description">Description</string>
+    <string name="optional">(optional)</string>
+    <string name="add_sub_note">Add a sub note</string>
+    <string name="note_not_found">No notes to display</string>
 </resources>
