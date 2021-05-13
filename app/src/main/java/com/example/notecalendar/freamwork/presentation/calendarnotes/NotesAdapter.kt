@@ -2,10 +2,13 @@ package com.example.notecalendar.freamwork.presentation.calendarnotes
 
 import android.content.Context
 import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.BulletSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -39,13 +42,18 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {
         val note = differ.currentList[position]
-        holder.itemView.tv_title.text = note.title
+        holder.itemView.cl_root.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, getBackgroundColor(position)))
+        holder.itemView.tv_note.text = note.title
         holder.itemView.tv_date.text = DateUtils.getDateWithFormat(note.date, DF.DATE_FORMAT, DF.HOUR_FORMAT)
         val expandedVisibility = if (note.isExpanded) View.VISIBLE else View.GONE
         holder.itemView.btn_delete.visibility = expandedVisibility
         holder.itemView.btn_edit.visibility = expandedVisibility
         holder.itemView.btn_delete.setOnClickListener { noteListener?.onDelete(note) }
         holder.itemView.btn_edit.setOnClickListener { noteListener?.onEdit(note) }
+        holder.itemView.setOnClickListener {
+            note.isExpanded = !note.isExpanded
+            notifyItemChanged(position)
+        }
         if (note.subNotes.isNotEmpty())
             attachSubNotes(holder, note.subNotes)
     }
@@ -53,9 +61,14 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
     override fun getItemCount() = differ.currentList.size
 
    private fun attachSubNotes(holder: NoteHolder, subNotes : List<SubNote>) {
-       val view = LayoutInflater.from(holder.itemView.context).inflate(R.layout.item_sub_note,holder.itemView.ll_sub_note,false)
+       holder.itemView.ll_sub_note.removeAllViews()
        subNotes.map {subNote->
-           view.tv_sub_note.text = subNote.note
+           val view = LayoutInflater.from(holder.itemView.context).inflate(R.layout.item_sub_note,holder.itemView.ll_sub_note,false)
+           val spannable = SpannableString(subNote.note)
+           val bulletSpan = BulletSpan(holder.itemView.context.resources.getDimension(R.dimen.bulletPadding).toInt(),
+               ContextCompat.getColor(holder.itemView.context,R.color.dark))
+           spannable.setSpan(bulletSpan, 0,subNote.note.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+           view.tv_sub_note.text = spannable
            val hasCommand = subNote.comment.isNotEmpty()
            if (hasCommand){
                view.tv_sub_note_comment.text = holder.itemView.context.getString(R.string.brackets_format, subNote.comment)
@@ -63,11 +76,21 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
            }
            holder.itemView.ll_sub_note.addView(view)
        }
+       holder.itemView.ll_sub_note.visibility = View.VISIBLE
     }
 
     fun updateItems(notes : List<Note>){
-       differ.submitList(notes)
+        differ.submitList(notes)
    }
+
+    private fun getBackgroundColor(index : Int) : Int{
+        return when{
+            index % 4 == 0 -> R.color.orange
+            index % 3 == 0 -> R.color.yellow
+            index % 2 == 0 -> R.color.purple
+            else -> R.color.orange_red
+        }
+    }
 }
 
 interface NoteListener{

@@ -5,6 +5,7 @@ import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 object DateUtils {
@@ -19,14 +20,13 @@ object DateUtils {
     }
 
     fun getDateWithFormat(dateStr : String, pattern : DF, toPattern : DF) : String{
-        val simpleDateFormat = SimpleDateFormat(pattern.format)
-        return simpleDateFormat.format(getDateTime(dateStr, toPattern))
+        val simpleDateFormat = SimpleDateFormat(toPattern.format)
+        return simpleDateFormat.format(getDateTime(dateStr, pattern))
     }
 
-    fun getDateTime(dateStr : String, pattern: DF) : LocalDateTime {
+    fun getDateTime(dateStr : String, pattern: DF) : Date {
         val simpleDateFormat = SimpleDateFormat(pattern.format)
-        val date = simpleDateFormat.parse(dateStr)
-        return LocalDateTime.fromDateFields(date)
+        return simpleDateFormat.parse(dateStr)
     }
 
 }

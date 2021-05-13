@@ -45,7 +45,6 @@ class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes){
                 tv_date.text = DateUtils.getDateWithFormat(DateUtils.getDateTime(month), DF.MONTH_YEAR_FORMAT)
             }
         }
-        val sa = DateUtils.getDateTime("21-06-1996 21:00",DF.DATE_FORMAT)
         val currentMonth = YearMonth.now()
         val firstMonth = currentMonth.minusMonths(10)
         val lastMonth = currentMonth.plusMonths(10)
@@ -67,11 +66,11 @@ class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes){
             Note("1","Sınav", listOf(
                 SubNote("Üniteleri bul","yardım al birinden"),
                 SubNote("Konulara çalış")
-            ),"21-01-1778 16:00"),
+            ),"21-01-2020 16:00"),
             Note("2","Sınav Günü", listOf(
                 SubNote("Kahvaltı yap"),
                 SubNote("Yola çık","Metrobüsler boş")
-            ),"22-01-1778 08:00")
+            ),"22-01-2020 08:00")
         )
     }
 }
