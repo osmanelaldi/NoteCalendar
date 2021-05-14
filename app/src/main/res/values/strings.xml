@@ -1,5 +1,6 @@
 <resources>
     <string name="brackets_format">(%s)</string>
+    <string name="sub_note_description">Sub note %s</string>
     <string name="app_name">NoteCalendar</string>
     <string name="fab_description">add</string>
     <string name="notes">Notes</string>
@@ -13,6 +14,7 @@
     <string name="apply">Apply</string>
     <string name="description">Description</string>
     <string name="optional">(optional)</string>
+    <string name="description_optional">Description (optional)</string>
     <string name="add_sub_note">Add a sub note</string>
     <string name="note_not_found">No notes to display</string>
 </resources>
