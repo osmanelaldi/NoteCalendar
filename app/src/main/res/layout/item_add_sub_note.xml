@@ -3,44 +3,62 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/dark">
+    android:background="@color/dark"
+    android:clipChildren="false">
 
     <ImageView
-        android:id="@+id/iv_dot"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        app:layout_constraintTop_toTopOf="@id/et_title"
-        app:layout_constraintBottom_toBottomOf="@id/et_description"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="20dp"
-        android:src="@drawable/bg_white_dot"/>
+        android:id="@+id/iv_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="@id/til_title"
+        app:layout_constraintBottom_toBottomOf="@id/til_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_delete"
+        android:tint="@color/white"/>
 
-    <EditText
-        android:id="@+id/et_title"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sanf_regular"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:hint="@string/sub_note"
+            android:textSize="11sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/sanf_regular"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="11sp" />
-    <EditText
-        android:id="@+id/et_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        app:layout_constraintTop_toBottomOf="@id/et_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/sanf_regular"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:hint="@string/description_optional"
-        android:textSize="11sp" />
+        app:layout_constraintTop_toBottomOf="@id/til_title">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sanf_regular"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:hint="@string/description_optional"
+            android:textSize="11sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
