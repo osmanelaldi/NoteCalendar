@@ -15,7 +15,7 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
 
     inner class SubNoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SubNote>() {
+    private val callback = object : DiffUtil.ItemCallback<SubNote>() {
 
         override fun areItemsTheSame(oldItem: SubNote, newItem: SubNote): Boolean {
             return oldItem.note == newItem.note
@@ -26,7 +26,7 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
         }
 
     }
-    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+    private val differ = AsyncListDiffer(this, callback)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubNoteHolder {
@@ -39,5 +39,8 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
 
     override fun getItemCount() = differ.currentList.size
 
+    fun addSubNote(){
+        val hint =
+    }
 
 }

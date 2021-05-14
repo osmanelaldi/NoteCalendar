@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.item_sub_note.view.*
 class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapter<NotesAdapter.NoteHolder>() {
     inner class NoteHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
 
-    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Note>() {
+    private val callback = object : DiffUtil.ItemCallback<Note>() {
 
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
             return oldItem.id == newItem.id
@@ -35,7 +35,7 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
         }
 
     }
-    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+    private val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         NoteHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_note,parent,false))
