@@ -28,5 +28,7 @@ class CreateOrEditNoteFragment : Fragment(R.layout.fragment_create_edit) {
 
     private fun controlAndSubmit(){
         val subNotesWrapper = subNoteAdapter.retrieveSubNotes()
+        if (subNotesWrapper.errors)
+            subNoteAdapter.showError()
     }
 }

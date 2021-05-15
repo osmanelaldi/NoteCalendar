@@ -26,7 +26,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="60dp"
         android:layout_marginTop="10dp"
-        android:textColorHint="@color/white"
+        android:theme="@style/EditScreenTextInputLayoutStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,10 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sanf_regular"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:hint="@string/sub_note"
-            android:textSize="11sp" />
+            android:hint="@string/sub_note"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -48,6 +45,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="60dp"
         android:layout_marginTop="10dp"
+        android:theme="@style/EditScreenTextInputLayoutStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_title">
@@ -56,9 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sanf_regular"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:hint="@string/description_optional"
-            android:textSize="11sp" />
+            android:hint="@string/description_optional" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

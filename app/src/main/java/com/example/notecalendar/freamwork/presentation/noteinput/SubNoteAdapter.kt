@@ -39,6 +39,7 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
 
     override fun onBindViewHolder(holder: SubNoteHolder, position: Int) {
         val subNoteBuilderItem = differ.currentList[position]
+        holder.itemView.til_title.error = if (subNoteBuilderItem.error) "Empty" else null
         holder.itemView.iv_remove.setOnClickListener {
             removeSubNote(subNoteBuilderItem)
         }
@@ -70,6 +71,10 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
                 return SubNotesWrapper(listOf(), true)
         }
             return SubNotesWrapper(subNotes, errors = false)
+    }
+
+    fun showError(){
+        notifyDataSetChanged()
     }
 
 }
