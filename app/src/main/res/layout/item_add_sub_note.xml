@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sanf_regular"
+            android:textColor="@color/white"
             android:hint="@string/sub_note"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sanf_regular"
+            android:textColor="@color/white"
             android:hint="@string/description_optional" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

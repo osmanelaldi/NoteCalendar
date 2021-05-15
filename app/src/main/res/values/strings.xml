@@ -17,4 +17,5 @@
     <string name="description_optional">Description (optional)</string>
     <string name="add_sub_note">Add a sub note</string>
     <string name="note_not_found">No notes to display</string>
+    <string name="note_should_not_be_empty">The note should not be empty.</string>
 </resources>

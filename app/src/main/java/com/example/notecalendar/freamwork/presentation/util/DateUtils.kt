@@ -34,5 +34,6 @@ object DateUtils {
 enum class DF(val format : String){
     HOUR_FORMAT("HH:mm"),
     MONTH_YEAR_FORMAT("YYYY MMM"),
-    DATE_FORMAT("dd-mm-yyyy HH:mm")
+    DATE_FORMAT("dd-MM-yyyy HH:mm"),
+    PICKER_FORMAT("dd-MM-yyyy'T'HH:mm.sss")
 }

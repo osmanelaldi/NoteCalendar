@@ -21,4 +21,26 @@
         <item name="errorTextColor">@color/orange_red</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="DatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/dark</item>
+        <!--selected Item color-->
+        <item name="colorControlActivated">@color/orange_red</item>
+        <!-- arrow bordercolor(<>)-->
+        <item name="android:selectableItemBackgroundBorderless">@color/white</item>
+        <!-- Highlight item color-->
+        <item name="colorControlHighlight">@color/orange_red</item>
+        <!--Calender Background color -->
+        <item name="android:windowBackground">@color/white</item>
+        <!-- Ok Cancel Color-->
+        <item name="android:textColor">@color/dark</item>
+        <!-- Week TextColor-->
+        <item name="android:textColorSecondary">@color/lighter_dark</item>
+        <!-- Calender Number color arrow color (< >) -->
+        <item name="android:textColorPrimary">@color/dark</item>
+        <!--day , month-->
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+        <!-- year-->
+        <item name="android:textColorSecondaryInverse">@color/white</item>
+
+    </style>
 </resources>
