@@ -31,4 +31,5 @@ object Dependencies {
     val joda = "net.danlew:android.joda:${Versions.joda_version}"
     val calendar = "com.github.kizitonwose:CalendarView:${Versions.calendar_version}"
     val desugar = "com.android.tools:desugar_jdk_libs:${Versions.desugar_version}"
+    val hilt_google = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
 }

@@ -41,4 +41,5 @@ object Versions {
     val joda_version = "2.10.9.1"
     val calendar_version = "1.0.3"
     val desugar_version = "1.0.9"
+    val hiltVersion = "2.35"
 }
