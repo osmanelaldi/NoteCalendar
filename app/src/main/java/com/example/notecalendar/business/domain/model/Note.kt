@@ -24,3 +24,5 @@ data class SubNotesWrapper(
     val subNotes: List<SubNote>,
     val errors : Boolean
 )
+
+class EmptyResponse{}

@@ -1,13 +1,11 @@
 package com.example.notecalendar.freamwork.presentation.calendarnotes
 
-import android.content.Context
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.BulletSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -17,7 +15,6 @@ import com.example.notecalendar.business.domain.model.Note
 import com.example.notecalendar.business.domain.model.SubNote
 import com.example.notecalendar.freamwork.presentation.util.DF
 import com.example.notecalendar.freamwork.presentation.util.DateUtils
-import kotlinx.android.synthetic.main.fragment_calendar_notes.view.*
 import kotlinx.android.synthetic.main.item_note.view.*
 import kotlinx.android.synthetic.main.item_sub_note.view.*
 

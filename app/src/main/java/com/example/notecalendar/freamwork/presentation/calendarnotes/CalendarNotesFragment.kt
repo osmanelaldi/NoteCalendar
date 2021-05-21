@@ -9,17 +9,13 @@ import com.example.notecalendar.R
 import com.example.notecalendar.business.domain.model.Note
 import com.example.notecalendar.business.domain.model.SubNote
 import com.example.notecalendar.freamwork.presentation.calendar.DayViewContainer
-import com.example.notecalendar.freamwork.presentation.calendar.MonthViewContainer
 import com.example.notecalendar.freamwork.presentation.util.DF
 import com.example.notecalendar.freamwork.presentation.util.DateUtils
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
-import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.ui.DayBinder
-import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.MonthScrollListener
-import com.kizitonwose.calendarview.utils.Size
 import kotlinx.android.synthetic.main.fragment_calendar_notes.view.*
 import kotlinx.android.synthetic.main.layout_calendar_header.*
 import java.time.YearMonth

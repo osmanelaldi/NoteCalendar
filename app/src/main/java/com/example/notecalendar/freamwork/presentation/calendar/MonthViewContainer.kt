@@ -3,7 +3,6 @@ package com.example.notecalendar.freamwork.presentation.calendar
 import android.view.View
 import android.widget.TextView
 import com.example.notecalendar.R
-import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.ui.ViewContainer
 import java.time.DayOfWeek
 import java.time.format.TextStyle

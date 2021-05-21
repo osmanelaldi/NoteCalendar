@@ -4,11 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notecalendar.R
-import com.example.notecalendar.business.domain.model.Note
 import com.example.notecalendar.business.domain.model.SubNote
 import com.example.notecalendar.business.domain.model.SubNoteBuilderItem
 import com.example.notecalendar.business.domain.model.SubNotesWrapper

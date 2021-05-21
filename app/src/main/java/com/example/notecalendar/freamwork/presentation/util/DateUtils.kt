@@ -2,9 +2,7 @@ package com.example.notecalendar.freamwork.presentation.util
 
 import com.kizitonwose.calendarview.model.CalendarMonth
 import org.joda.time.DateTime
-import org.joda.time.LocalDateTime
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 

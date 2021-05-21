@@ -7,6 +7,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     implementation Dependencies.firebase_analytics
     implementation Dependencies.joda
     implementation Dependencies.calendar
+    implementation Dependencies.hilt_google
     implementation AndroidTestDependencies.idling_resource
 
     implementation SupportDependencies.swipe_refresh_layout
@@ -71,6 +73,7 @@ dependencies {
 
     kapt AnnotationProcessing.room_compiler
     kapt AnnotationProcessing.dagger_compiler
+    kapt AnnotationProcessing.hilt_google_compiler
 
     testImplementation TestDependencies.mockk
     testImplementation TestDependencies.jupiter_api

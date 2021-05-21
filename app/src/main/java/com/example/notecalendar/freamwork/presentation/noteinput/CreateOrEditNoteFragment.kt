@@ -15,7 +15,6 @@ import com.example.notecalendar.freamwork.presentation.util.DF
 import com.example.notecalendar.freamwork.presentation.util.DateUtils
 import kotlinx.android.synthetic.main.fragment_create_edit.*
 import org.joda.time.LocalDateTime
-import java.util.*
 
 
 class CreateOrEditNoteFragment : Fragment(R.layout.fragment_create_edit) {
