@@ -2,21 +2,22 @@ package com.example.notecalendar.business.data.network.implementation
 
 import com.example.notecalendar.business.data.network.abstraction.NoteNetworkDataSource
 import com.example.notecalendar.business.domain.model.Note
+import com.example.notecalendar.freamwork.datasource.network.abstraction.NoteNetworkService
 import com.example.notecalendar.freamwork.datasource.network.implementation.NoteService
 
-class NoteNetworkDataSourceImpl(val noteService: NoteService) : NoteNetworkDataSource{
+class NoteNetworkDataSourceImpl(private val noteNetworkService: NoteNetworkService) : NoteNetworkDataSource{
     override suspend fun getNotes(startDate: String, endDate: String): List<Note> {
-        return noteService.getNotes(startDate, endDate)
+        return noteNetworkService.getNotes(startDate, endDate)
 
     }
 
     override suspend fun upsertNote(note: Note): Any {
-        return noteService.upsertNote(note)
+        return noteNetworkService.upsertNote(note)
 
     }
 
     override suspend fun removeNote(note: Note): Any {
-       return noteService.removeNote(note.id)
+       return noteNetworkService.removeNote(note.id)
     }
 
 

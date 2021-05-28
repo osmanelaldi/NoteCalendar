@@ -18,6 +18,6 @@
     </fragment>
     <fragment
         android:id="@+id/createOrEditNoteFragment"
-        android:name="com.example.notecalendar.freamwork.presentation.noteinput.CreateOrEditNoteFragment"
+        android:name="com.example.notecalendar.freamwork.presentation.noteinput.UpsertNoteFragment"
         android:label="CreateOrEditNoteFragment" />
 </navigation>

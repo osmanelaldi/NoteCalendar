@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_create_edit.*
 import org.joda.time.LocalDateTime
 
 
-class CreateOrEditNoteFragment : Fragment(R.layout.fragment_create_edit) {
+class UpsertNoteFragment : Fragment(R.layout.fragment_create_edit) {
 
     private val subNoteAdapter = SubNoteAdapter()
     private var selectedDate : LocalDateTime? = null

@@ -4,6 +4,6 @@ import com.example.notecalendar.business.domain.model.Note
 import com.example.notecalendar.business.domain.state.ViewState
 import java.io.Serializable
 
-data class InsertEditViewState (
+data class UpsertViewState (
     var newNote : Note
     ) : Serializable, ViewState
