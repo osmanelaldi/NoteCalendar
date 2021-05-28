@@ -1,7 +1,9 @@
 package com.example.notecalendar.di
 
+import com.example.notecalendar.business.data.network.abstraction.NoteNetworkDataSource
 import com.example.notecalendar.freamwork.datasource.network.implementation.BaseApi
 import com.example.notecalendar.freamwork.datasource.network.implementation.HeadersInterceptor
+import com.example.notecalendar.freamwork.datasource.network.implementation.NoteNetworkServiceImpl
 import com.example.notecalendar.freamwork.datasource.network.implementation.NoteService
 import dagger.Module
 import dagger.Provides
@@ -22,5 +24,11 @@ object AppModule {
         Retrofit.Builder().baseUrl(BaseApi.URL).client(okHttpClient).build()
 
     @Provides
-    fun proveNoteService(retrofit: Retrofit) = retrofit.create(NoteService::class.java)
+    fun provideNoteService(retrofit: Retrofit) = retrofit.create(NoteService::class.java)
+
+    @Provides
+    fun noteNetworkDataSource(noteService: NoteService) : NoteNetworkDataSource{
+        return NoteNetworkServiceImpl(noteService)
+    }
+
 }

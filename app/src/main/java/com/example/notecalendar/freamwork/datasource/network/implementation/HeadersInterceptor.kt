@@ -11,6 +11,7 @@ class HeadersInterceptor : Interceptor {
         builder.addHeader("apikey",BaseApi.KEY)
         builder.addHeader("Authorization", BaseApi.KEY)
         builder.addHeader("Content-Type","application/json")
+        builder.addHeader("Prefer","resolution=merge-duplicates")
         return chain.proceed(builder.build())
     }
 }

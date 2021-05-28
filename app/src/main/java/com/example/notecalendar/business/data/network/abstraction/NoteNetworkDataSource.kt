@@ -4,10 +4,9 @@ import com.example.notecalendar.business.domain.model.Note
 
 interface NoteNetworkDataSource {
 
-    fun getNotes(startDate : String, endDate: String)
+    suspend fun getNotes(startDate : String, endDate: String) : List<Note>
 
-    fun addNote(note : Note)
-
-    fun removeNote(note : Note)
+    suspend fun upsertNote(note : Note) : Any
+    suspend fun removeNote(note : Note) : Any
 
 }

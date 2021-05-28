@@ -15,8 +15,8 @@ interface NoteService {
     suspend fun getNotes(@Query("date") startDate : String, @Query("date") endDate: String) : List<Note>
 
     @POST
-    suspend fun addNote(note : Note) : EmptyResponse
+    suspend fun upsertNote(note : Note) : Any
 
     @DELETE
-    suspend fun removeNote(@Query("id") id : String) : EmptyResponse
+    suspend fun removeNote(@Query("id") id : String) : Any
 }

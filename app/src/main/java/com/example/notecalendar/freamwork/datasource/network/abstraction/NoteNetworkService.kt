@@ -6,7 +6,7 @@ interface NoteNetworkService {
 
     suspend fun getNotes(startDate : String, endDate: String)
 
-    suspend fun addNote(note : Note)
+    suspend fun upsertNote(note : Note)
 
     suspend fun removeNote(id : String)
 }

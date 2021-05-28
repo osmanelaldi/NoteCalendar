@@ -9,8 +9,8 @@ class NoteNetworkServiceImpl @Inject constructor(val noteService: NoteService) :
         noteService.getMonthlyNotes(startDate, endDate)
     }
 
-    override suspend fun addNote(note: Note) {
-        noteService.addNote(note)
+    override suspend fun upsertNote(note: Note) {
+        noteService.upsertNote(note)
     }
 
     override suspend fun removeNote(id: String) {
