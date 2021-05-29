@@ -2,21 +2,19 @@ package com.example.notecalendar.freamwork.datasource.network.implementation
 
 import com.example.notecalendar.business.domain.model.EmptyResponse
 import com.example.notecalendar.business.domain.model.Note
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import com.squareup.okhttp.ResponseBody
+import retrofit2.http.*
 
 interface NoteService {
 
     suspend fun getMonthlyNotes(startDate: String, endDate: String) = getNotes("gt.$startDate", "lt.$endDate")
 
-    @GET("select=*")
+    @GET("Notes?select=*")
     suspend fun getNotes(@Query("date") startDate : String, @Query("date") endDate: String) : List<Note>
 
-    @POST
-    suspend fun upsertNote(note : Note) : Any
+    @POST("Notes")
+    suspend fun upsertNote(@Body note : Note)
 
-    @DELETE
-    suspend fun removeNote(@Query("id") id : String) : Any
+    @DELETE("Notes")
+    suspend fun removeNote(@Query("id") id : String)
 }

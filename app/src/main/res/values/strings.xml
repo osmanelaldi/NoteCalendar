@@ -18,4 +18,5 @@
     <string name="add_sub_note">Add a sub note</string>
     <string name="note_not_found">No notes to display</string>
     <string name="note_should_not_be_empty">The note should not be empty.</string>
+    <string name="date_should_note_be_empty">The date should not be empty.</string>
 </resources>

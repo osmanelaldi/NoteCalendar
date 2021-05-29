@@ -6,7 +6,7 @@ data class Note(
     val description : String? = null,
     val subNotes : List<SubNote>,
     val date : String,
-    var isExpanded : Boolean = false
+    @Transient var isExpanded : Boolean = false
 )
 
 data class SubNote(

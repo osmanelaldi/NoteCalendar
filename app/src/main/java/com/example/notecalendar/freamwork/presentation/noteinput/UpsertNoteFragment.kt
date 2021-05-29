@@ -1,5 +1,6 @@
 package com.example.notecalendar.freamwork.presentation.noteinput
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
@@ -8,20 +9,36 @@ import android.text.InputType
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notecalendar.R
+import com.example.notecalendar.business.domain.model.Note
+import com.example.notecalendar.business.domain.state.MessageType
+import com.example.notecalendar.business.interactors.UpsertNote
+import com.example.notecalendar.freamwork.presentation.common.displayToast
+import com.example.notecalendar.freamwork.presentation.noteinput.state.UpsertStateEvent
 import com.example.notecalendar.freamwork.presentation.util.DF
 import com.example.notecalendar.freamwork.presentation.util.DateUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_edit.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import org.joda.time.LocalDateTime
+import java.util.*
 
-
+@FlowPreview
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class UpsertNoteFragment : Fragment(R.layout.fragment_create_edit) {
 
     private val subNoteAdapter = SubNoteAdapter()
     private var selectedDate : LocalDateTime? = null
 
+    private val viewModel by viewModels<UpsertNoteViewModel>()
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,12 +58,52 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_create_edit) {
             if (MotionEvent.ACTION_UP == event.action) showDatePicker() // Instead of your Toast
             false
         })
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers(){
+        viewModel.stateMessage.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            it?.let { message->
+                Toast.makeText(requireContext(),message.response.message,Toast.LENGTH_LONG).show()
+                if (message.response.messageType == MessageType.Success() &&
+                            message.response.message == UpsertNote.UPSERT_NOTE_SUCCESS)
+                                findNavController().popBackStack()
+                viewModel.clearStateMessage()
+            }
+        })
     }
 
     private fun controlAndSubmit(){
-        val subNotesWrapper = subNoteAdapter.retrieveSubNotes()
-        if (subNotesWrapper.errors)
-            subNoteAdapter.showError()
+        if (isNoteValid()){
+            val subNotesWrapper = subNoteAdapter.retrieveSubNotes()
+            if (subNotesWrapper.errors)
+                subNoteAdapter.showError()
+            else{
+                val noteTitle = et_title.text.toString()
+                val noteDescription = et_description.text.toString()
+                val noteDate = et_title.text.toString()
+                val noteId = UUID.randomUUID().toString()
+                val note = Note(noteId,noteTitle,noteDescription,subNotesWrapper.subNotes,noteDate)
+                viewModel.setStateEvent(UpsertStateEvent.UpsertNote(note))
+            }
+
+        }
+    }
+
+    private fun isNoteValid() : Boolean{
+        if(et_title.text.isNullOrEmpty()){
+            et_title.error = getString(R.string.note_should_not_be_empty)
+            return false
+        }
+        else if(et_date.text.isNullOrEmpty()){
+            et_date.error = getString(R.string.date_should_note_be_empty)
+            return false
+        }
+        else{
+            et_title.error = null
+            et_date.error = null
+            return true
+        }
     }
 
     private fun showDatePicker(){

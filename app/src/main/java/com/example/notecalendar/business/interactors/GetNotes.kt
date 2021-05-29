@@ -1,4 +1,4 @@
-package com.example.notecalendar.business.interactors.calendarnotes
+package com.example.notecalendar.business.interactors
 
 import com.example.notecalendar.business.data.network.ApiResponseHandler
 import com.example.notecalendar.business.data.network.abstraction.NoteNetworkDataSource
@@ -11,8 +11,11 @@ import com.example.notecalendar.freamwork.presentation.calendarnotes.state.Calen
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class GetNotes(
+class GetNotes
+@Inject
+constructor(
     private var noteNetworkDataSource: NoteNetworkDataSource
 ){
     fun getNotes(stateEvent: StateEvent) : Flow<DataState<CalendarNotesViewState>?> = flow {

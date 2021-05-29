@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.notecalendar.R
@@ -18,6 +19,7 @@ import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthScrollListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_calendar_notes.view.*
 import kotlinx.android.synthetic.main.layout_calendar_header.*
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +29,7 @@ import java.time.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes){
 
     private val notesAdapter = NotesAdapter()

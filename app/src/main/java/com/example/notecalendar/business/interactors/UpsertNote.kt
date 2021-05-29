@@ -1,4 +1,4 @@
-package com.example.notecalendar.business.interactors.calendarnotes
+package com.example.notecalendar.business.interactors
 
 import com.example.notecalendar.business.data.network.ApiResponseHandler
 import com.example.notecalendar.business.data.network.abstraction.NoteNetworkDataSource
@@ -9,11 +9,14 @@ import com.example.notecalendar.freamwork.presentation.noteinput.state.UpsertVie
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class UpsertNote(
+class UpsertNote
+@Inject
+constructor(
     private val noteNetworkDataSource: NoteNetworkDataSource
 ) {
-    fun createNote(stateEvent : StateEvent) : Flow<DataState<UpsertViewState>?> = flow {
+    fun upsertNote(stateEvent : StateEvent) : Flow<DataState<UpsertViewState>?> = flow {
         val event = stateEvent as UpsertStateEvent.UpsertNote
         val apiResult = safeApiCall(IO){
             noteNetworkDataSource.upsertNote(event.note)
@@ -25,7 +28,7 @@ class UpsertNote(
             override suspend fun handleSuccess(resultObj: Any): DataState<UpsertViewState> {
                return DataState.data(
                    response = Response(
-                       message = INSERT_NOTE_SUCCESS,
+                       message = UPSERT_NOTE_SUCCESS,
                        uiComponentType = UIComponentType.Toast(),
                        messageType = MessageType.Success()
                    ),
@@ -38,7 +41,7 @@ class UpsertNote(
         emit(apiResponse)
     }
     companion object{
-        val INSERT_NOTE_SUCCESS = "Successfully inserted new note."
-        val INSERT_NOTE_FAILED = "Failed to insert new note."
+        val UPSERT_NOTE_SUCCESS = "UPSERT_NOTE_SUCCESS"
+        val UPSERT_NOTE_FAILED = "UPSERT_NOTE_FAILED"
     }
 }
