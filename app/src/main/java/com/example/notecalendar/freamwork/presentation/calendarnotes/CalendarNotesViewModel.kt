@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import java.util.ArrayList
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -24,7 +25,7 @@ constructor(
     private val deleteNote: DeleteNote
 ) : BaseViewModel<CalendarNotesViewState>(){
     override fun handleNewData(data: CalendarNotesViewState) {
-        data.notes?.let { updateNotes(it) }
+        data.notesWithDate?.let { updateNotes(it) }
         data.deletedNote?.let { updateDeletedNote(it) }
     }
 
@@ -51,9 +52,9 @@ constructor(
         setViewState(update)
     }
 
-    private fun updateNotes(notes : List<Note>){
+    private fun updateNotes(notesWithDate : HashMap<String, ArrayList<Note>>){
         val update = getCurrentViewStateOrNew()
-        update.notes = notes
+        update.notesWithDate = notesWithDate
         setViewState(update)
     }
 }

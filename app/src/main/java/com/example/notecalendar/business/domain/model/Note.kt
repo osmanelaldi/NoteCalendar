@@ -1,5 +1,7 @@
 package com.example.notecalendar.business.domain.model
 
+import java.io.Serializable
+
 data class Note(
     val id : String,
     val title : String,
@@ -7,7 +9,7 @@ data class Note(
     val subNotes : List<SubNote>,
     val date : String,
     @Transient var isExpanded : Boolean = false
-)
+) : Serializable
 
 data class SubNote(
     val note : String,

@@ -36,6 +36,7 @@ object Versions {
     val junit_jupiter_version = "5.6.0"
     val junit_4_version = "4.12"
     val fragment_version = "1.2.0"
+    val fragment = "1.3.4"
     val androidx_test_ext = "1.1.1"
     val crashlytics_gradle = "2.1.0"
     val joda_version = "2.10.9.1"

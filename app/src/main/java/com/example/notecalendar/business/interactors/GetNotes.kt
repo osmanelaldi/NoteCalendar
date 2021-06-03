@@ -8,9 +8,12 @@ import com.example.notecalendar.business.domain.state.DataState
 import com.example.notecalendar.business.domain.state.StateEvent
 import com.example.notecalendar.freamwork.presentation.calendarnotes.state.CalendarNotesStateEvent
 import com.example.notecalendar.freamwork.presentation.calendarnotes.state.CalendarNotesViewState
+import com.example.notecalendar.freamwork.presentation.util.DF
+import com.example.notecalendar.freamwork.presentation.util.DateUtils
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.util.ArrayList
 import javax.inject.Inject
 
 class GetNotes
@@ -28,8 +31,17 @@ constructor(
             stateEvent
         ){
             override suspend fun handleSuccess(resultObj: List<Note>): DataState<CalendarNotesViewState>? {
+                val notesWithDate : HashMap<String, ArrayList<Note>> = hashMapOf()
+                resultObj.forEach {note->
+                    val date = DateUtils.getDateWithFormat(note.date, DF.DATE_FORMAT, DF.DATE_WITHOUT_HOUR_FORMAT)
+                    notesWithDate[date]?.let { notes->
+                        notes.add(note)
+                    }?.run {
+                        notesWithDate.put(date, arrayListOf(note))
+                    }
+                }
                 return DataState.data(
-                    data = CalendarNotesViewState(notes = resultObj),
+                    data = CalendarNotesViewState(notesWithDate = notesWithDate),
                     response = null,
                     stateEvent = stateEvent
                 )

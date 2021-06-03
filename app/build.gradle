@@ -45,6 +45,7 @@ dependencies {
     implementation Dependencies.kotlin_standard_library
     implementation Dependencies.kotlin_reflect
     implementation Dependencies.ktx
+    implementation Dependencies.fragment
     implementation Dependencies.navigation_runtime
     implementation Dependencies.navigation_ui
     implementation Dependencies.navigation_fragment

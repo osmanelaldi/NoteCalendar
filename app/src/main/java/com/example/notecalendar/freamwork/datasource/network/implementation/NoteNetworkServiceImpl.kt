@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class NoteNetworkServiceImpl @Inject constructor(val noteService: NoteService) : NoteNetworkService{
     override suspend fun getNotes(startDate: String, endDate: String): List<Note> {
-        return noteService.getMonthlyNotes(startDate, endDate)
+        return noteService.getNotes(startDate, endDate)
     }
 
     override suspend fun upsertNote(note: Note) {

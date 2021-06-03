@@ -10,8 +10,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.notecalendar.R
 import com.example.notecalendar.business.domain.model.Note
@@ -26,12 +29,17 @@ import kotlinx.android.synthetic.main.fragment_create_edit.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import org.joda.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class UpsertNoteFragment : Fragment(R.layout.fragment_create_edit) {
+
+    companion object{
+        const val UPSERT_RESULT = "UPSERT_RESULT"
+        const val UPSERT_NOTE = "UPSERT_NOTE"
+    }
 
     private val subNoteAdapter = SubNoteAdapter()
     private var selectedDate : LocalDateTime? = null
@@ -62,12 +70,16 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_create_edit) {
     }
 
     private fun subscribeObservers(){
-        viewModel.stateMessage.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.viewState.observe(viewLifecycleOwner, Observer {
+            it.newNote?.let {note->
+                val bundle = bundleOf(Pair(UPSERT_NOTE, note))
+                setFragmentResult(UPSERT_RESULT,bundle)
+                findNavController().popBackStack()
+            }
+        })
+        viewModel.stateMessage.observe(viewLifecycleOwner, Observer {
             it?.let { message->
                 Toast.makeText(requireContext(),message.response.message,Toast.LENGTH_LONG).show()
-                if (message.response.messageType == MessageType.Success() &&
-                            message.response.message == UpsertNote.UPSERT_NOTE_SUCCESS)
-                                findNavController().popBackStack()
                 viewModel.clearStateMessage()
             }
         })

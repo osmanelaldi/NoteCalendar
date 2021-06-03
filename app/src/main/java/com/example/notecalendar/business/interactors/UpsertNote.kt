@@ -32,7 +32,7 @@ constructor(
                        uiComponentType = UIComponentType.Toast(),
                        messageType = MessageType.Success()
                    ),
-                   data = null,
+                   data = UpsertViewState(newNote = event.note),
                    stateEvent
                )
             }
