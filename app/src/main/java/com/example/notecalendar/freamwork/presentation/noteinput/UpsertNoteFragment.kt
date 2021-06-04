@@ -93,7 +93,7 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_create_edit) {
             else{
                 val noteTitle = et_title.text.toString()
                 val noteDescription = et_description.text.toString()
-                val noteDate = et_title.text.toString()
+                val noteDate = DateUtils.getDateWithFormat(selectedDate!!.toDateTime(), DF.DATE_FORMAT)
                 val noteId = UUID.randomUUID().toString()
                 val note = Note(noteId,noteTitle,noteDescription,subNotesWrapper.subNotes,noteDate)
                 viewModel.setStateEvent(UpsertStateEvent.UpsertNote(note))

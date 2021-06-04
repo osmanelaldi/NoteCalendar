@@ -7,10 +7,8 @@ import retrofit2.http.*
 
 interface NoteService {
 
-    suspend fun getMonthlyNotes(startDate: String, endDate: String) = getNotes("gt.$startDate", "lt.$endDate")
-
-    @GET("Notes?select=*")
-    suspend fun getNotes(@Query("gt.date") startDate : String, @Query("lt.date") endDate: String) : List<Note>
+    @GET("Notes?")
+    suspend fun getNotes(@Query("date") startDate : String, @Query("date") endDate: String, @Query("select") notes : String = "*") : List<Note>
 
     @POST("Notes")
     suspend fun upsertNote(@Body note : Note)

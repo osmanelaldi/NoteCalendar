@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
     <TextView
         android:id="@+id/tv_day"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:background="@drawable/bg_day"
         android:gravity="center"
         android:layout_gravity="center"
         android:fontFamily="@font/sanf_bold"

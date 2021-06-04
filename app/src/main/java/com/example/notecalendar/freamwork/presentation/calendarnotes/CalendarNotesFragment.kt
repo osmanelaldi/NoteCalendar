@@ -96,6 +96,7 @@ class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes), Calend
 
     private fun updateCalendarUI(notesWithDate : HashMap<String,ArrayList<Note>>?){
         calendarDayAdapter.updateCalendarNotes(notesWithDate ?: kotlin.run { hashMapOf() })
+        view?.cv_notes?.notifyCalendarChanged()
     }
 
 }

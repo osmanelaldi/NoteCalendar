@@ -24,7 +24,7 @@ constructor(
     fun getNotes(stateEvent: StateEvent) : Flow<DataState<CalendarNotesViewState>?> = flow {
         val event = stateEvent as CalendarNotesStateEvent.GetNotes
         val apiResult = safeApiCall(IO){
-            noteNetworkDataSource.getNotes(event.startDate,event.endDate)
+            noteNetworkDataSource.getNotes("gt.${event.startDate}","lt.${event.endDate}")
         }
         val apiResponse = object : ApiResponseHandler<CalendarNotesViewState, List<Note>>(
             response = apiResult,
@@ -34,11 +34,8 @@ constructor(
                 val notesWithDate : HashMap<String, ArrayList<Note>> = hashMapOf()
                 resultObj.forEach {note->
                     val date = DateUtils.getDateWithFormat(note.date, DF.DATE_FORMAT, DF.DATE_WITHOUT_HOUR_FORMAT)
-                    notesWithDate[date]?.let { notes->
-                        notes.add(note)
-                    }?.run {
-                        notesWithDate.put(date, arrayListOf(note))
-                    }
+                    notesWithDate[date]?: kotlin.run { notesWithDate.put(date, arrayListOf()) }
+                    notesWithDate[date]?.add(note)
                 }
                 return DataState.data(
                     data = CalendarNotesViewState(notesWithDate = notesWithDate),

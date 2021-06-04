@@ -67,6 +67,8 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
             subNoteBuilderItem.error = error
             if (error)
                 return SubNotesWrapper(listOf(), true)
+            else
+                subNotes.add(SubNote(subNoteBuilderItem.note,subNoteBuilderItem.comment))
         }
             return SubNotesWrapper(subNotes, errors = false)
     }

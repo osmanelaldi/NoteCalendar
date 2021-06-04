@@ -14,7 +14,7 @@ import com.kizitonwose.calendarview.ui.DayBinder
 class CalendarDayAdapter(var notesWithDates : HashMap<String,ArrayList<Note>> = hashMapOf(),
                          val listener : CalendarDayAdapterListener?) : DayBinder<DayViewContainer> {
     override fun bind(container: DayViewContainer, day: CalendarDay) {
-        val date = DateUtils.getDateWithFormat(DateUtils.getDateTime(day), DF.DATE_FORMAT)
+        val date = DateUtils.getDateWithFormat(DateUtils.getDateTime(day), DF.DATE_WITHOUT_HOUR_FORMAT)
         val notes = notesWithDates[date]
         val contains = !notes.isNullOrEmpty()
         updateDay(container.day, contains)
@@ -28,7 +28,7 @@ class CalendarDayAdapter(var notesWithDates : HashMap<String,ArrayList<Note>> = 
     override fun create(view: View) = DayViewContainer(view)
 
     private fun updateDay(day : TextView, contains : Boolean){
-        day.setBackgroundColor(ContextCompat.getColor(day.context, if (contains) R.color.white else R.color.dark))
+        day.isActivated = contains
         day.setTextColor(ContextCompat.getColor(day.context, if (contains) R.color.dark else R.color.white))
     }
 
