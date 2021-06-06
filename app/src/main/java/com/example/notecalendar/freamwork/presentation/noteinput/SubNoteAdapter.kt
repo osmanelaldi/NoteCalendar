@@ -1,7 +1,6 @@
 package com.example.notecalendar.freamwork.presentation.noteinput
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
@@ -10,12 +9,12 @@ import com.example.notecalendar.R
 import com.example.notecalendar.business.domain.model.SubNote
 import com.example.notecalendar.business.domain.model.SubNoteBuilderItem
 import com.example.notecalendar.business.domain.model.SubNotesWrapper
+import com.example.notecalendar.databinding.ItemAddSubNoteBinding
 import com.example.notecalendar.freamwork.presentation.util.CustomDiffer
-import kotlinx.android.synthetic.main.item_add_sub_note.view.*
 
 class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
 
-    inner class SubNoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class SubNoteHolder(val binding: ItemAddSubNoteBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val callback = object : DiffUtil.ItemCallback<SubNoteBuilderItem>() {
 
@@ -32,20 +31,22 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubNoteHolder {
-        return SubNoteHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_add_sub_note,parent,false)   )
+        return SubNoteHolder(ItemAddSubNoteBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun onBindViewHolder(holder: SubNoteHolder, position: Int) {
         val subNoteBuilderItem = differ.currentList[position]
-        holder.itemView.til_title.error = if (subNoteBuilderItem.error) holder.itemView.context.getString(R.string.note_should_not_be_empty) else null
-        holder.itemView.iv_remove.setOnClickListener {
-            removeSubNote(subNoteBuilderItem)
-        }
-        holder.itemView.et_title.addTextChangedListener {
-            subNoteBuilderItem.note = it.toString()
-        }
-        holder.itemView.et_description.addTextChangedListener {
-            subNoteBuilderItem.comment = it.toString()
+        with(holder){
+            binding.tilTitle.error = if (subNoteBuilderItem.error) holder.itemView.context.getString(R.string.note_should_not_be_empty) else null
+            binding.ivRemove.setOnClickListener {
+                removeSubNote(subNoteBuilderItem)
+            }
+            binding.etTitle.addTextChangedListener {
+                subNoteBuilderItem.note = it.toString()
+            }
+            binding.etDescription.addTextChangedListener {
+                subNoteBuilderItem.comment = it.toString()
+            }
         }
     }
 

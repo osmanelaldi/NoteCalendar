@@ -25,6 +25,10 @@ android {
         testInstrumentationRunner AndroidTestDependencies.instrumentation_runner
     }
 
+    buildFeatures{
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false

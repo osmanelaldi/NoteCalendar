@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notecalendar.R
 import com.example.notecalendar.business.domain.model.Note
 import com.example.notecalendar.business.domain.model.SubNote
+import com.example.notecalendar.databinding.ItemNoteBinding
+import com.example.notecalendar.databinding.ItemSubNoteBinding
 import com.example.notecalendar.freamwork.presentation.util.DF
 import com.example.notecalendar.freamwork.presentation.util.DateUtils
-import kotlinx.android.synthetic.main.item_note.view.*
-import kotlinx.android.synthetic.main.item_sub_note.view.*
 
 class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapter<NotesAdapter.NoteHolder>() {
-    inner class NoteHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
+    inner class NoteHolder(val binding : ItemNoteBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val callback = object : DiffUtil.ItemCallback<Note>() {
 
@@ -35,48 +35,52 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
     private val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        NoteHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_note,parent,false))
+        NoteHolder(ItemNoteBinding.inflate(LayoutInflater.from(parent.context),parent,false))
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {
         val note = differ.currentList[position]
-        holder.itemView.cl_root.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, getBackgroundColor(position)))
-        holder.itemView.tv_note.text = note.title
-        holder.itemView.tv_date.text = DateUtils.getDateWithFormat(note.date, DF.DATE_FORMAT, DF.HOUR_FORMAT)
-        note.description?.let {
-            holder.itemView.tv_note_description.visibility = View.VISIBLE
-            holder.itemView.tv_note_description.text = note.description
+        with(holder){
+            binding.clRoot.setBackgroundColor(ContextCompat.getColor(holder.binding.root.context, getBackgroundColor(position)))
+            binding.tvNote.text = note.title
+            binding.tvDate.text = DateUtils.getDateWithFormat(note.date, DF.DATE_FORMAT, DF.HOUR_FORMAT)
+            note.description?.let {
+                binding.tvNoteDescription.visibility = View.VISIBLE
+                binding.tvNoteDescription.text = note.description
+            }
+            val expandedVisibility = if (note.isExpanded) View.VISIBLE else View.GONE
+            binding.btnDelete.visibility = expandedVisibility
+            binding.btnEdit.visibility = expandedVisibility
+            binding.btnDelete.setOnClickListener { noteListener?.onDelete(note) }
+            binding.btnEdit.setOnClickListener { noteListener?.onEdit(note) }
+            binding.root.setOnClickListener {
+                note.isExpanded = !note.isExpanded
+                notifyItemChanged(position)
+            }
+            if (note.subNotes.isNotEmpty())
+                attachSubNotes(holder, note.subNotes)
         }
-        val expandedVisibility = if (note.isExpanded) View.VISIBLE else View.GONE
-        holder.itemView.btn_delete.visibility = expandedVisibility
-        holder.itemView.btn_edit.visibility = expandedVisibility
-        holder.itemView.btn_delete.setOnClickListener { noteListener?.onDelete(note) }
-        holder.itemView.btn_edit.setOnClickListener { noteListener?.onEdit(note) }
-        holder.itemView.setOnClickListener {
-            note.isExpanded = !note.isExpanded
-            notifyItemChanged(position)
-        }
-        if (note.subNotes.isNotEmpty())
-            attachSubNotes(holder, note.subNotes)
     }
 
     override fun getItemCount() = differ.currentList.size
 
    private fun attachSubNotes(holder: NoteHolder, subNotes : List<SubNote>) {
-       holder.itemView.ll_sub_note.removeAllViews()
-       subNotes.map {subNote->
-           val view = LayoutInflater.from(holder.itemView.context).inflate(R.layout.item_sub_note,holder.itemView.ll_sub_note,false)
-           val spannable = SpannableString(subNote.note)
-           val bulletSpan = BulletSpan(holder.itemView.context.resources.getDimension(R.dimen.bulletPadding).toInt(),
-               ContextCompat.getColor(holder.itemView.context,R.color.dark))
-           spannable.setSpan(bulletSpan, 0,subNote.note.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-           view.tv_sub_note.text = spannable
-           subNote.comment?.let { comment->
-               view.tv_sub_note_comment.text = holder.itemView.context.getString(R.string.brackets_format, comment)
-               view.tv_sub_note_comment.visibility = View.VISIBLE
+       with(holder){
+           binding.llSubNote.removeAllViews()
+           subNotes.map {subNote->
+               val subNoteBinding = ItemSubNoteBinding.inflate(LayoutInflater.from(holder.binding.root.context))
+               val spannable = SpannableString(subNote.note)
+               val bulletSpan = BulletSpan(holder.itemView.context.resources.getDimension(R.dimen.bulletPadding).toInt(),
+                   ContextCompat.getColor(holder.itemView.context,R.color.dark))
+               spannable.setSpan(bulletSpan, 0,subNote.note.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+               subNoteBinding.tvSubNote.text = spannable
+               subNote.comment?.let { comment->
+                   subNoteBinding.tvSubNoteComment.text = holder.itemView.context.getString(R.string.brackets_format, comment)
+                   subNoteBinding.tvSubNoteComment.visibility = View.VISIBLE
+               }
+               holder.binding.llSubNote.addView(subNoteBinding.root)
            }
-           holder.itemView.ll_sub_note.addView(view)
+           binding.llSubNote.visibility = View.VISIBLE
        }
-       holder.itemView.ll_sub_note.visibility = View.VISIBLE
     }
 
     fun updateItems(notes : List<Note>){
