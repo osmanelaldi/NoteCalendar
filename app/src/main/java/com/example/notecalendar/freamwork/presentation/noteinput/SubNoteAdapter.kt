@@ -37,6 +37,8 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
     override fun onBindViewHolder(holder: SubNoteHolder, position: Int) {
         val subNoteBuilderItem = differ.currentList[position]
         with(holder){
+            binding.etTitle.setText(subNoteBuilderItem.note)
+            binding.etDescription.setText(subNoteBuilderItem.comment)
             binding.tilTitle.error = if (subNoteBuilderItem.error) holder.itemView.context.getString(R.string.note_should_not_be_empty) else null
             binding.ivRemove.setOnClickListener {
                 removeSubNote(subNoteBuilderItem)
@@ -52,8 +54,8 @@ class SubNoteAdapter : RecyclerView.Adapter<SubNoteAdapter.SubNoteHolder>() {
 
     override fun getItemCount() = differ.currentList.size
 
-    fun addSubNote(){
-        differ.addItem(SubNoteBuilderItem())
+    fun addSubNote(title : String = "", description : String? = null){
+        differ.addItem(SubNoteBuilderItem(title,description ?: ""))
     }
 
     private fun removeSubNote(subNoteBuilderItem : SubNoteBuilderItem){

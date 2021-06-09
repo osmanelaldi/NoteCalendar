@@ -19,5 +19,11 @@
     <fragment
         android:id="@+id/createOrEditNoteFragment"
         android:name="com.example.notecalendar.freamwork.presentation.noteinput.UpsertNoteFragment"
-        android:label="CreateOrEditNoteFragment" />
+        android:label="CreateOrEditNoteFragment" >
+        <argument
+            android:name="EditNote"
+            app:argType="com.example.notecalendar.business.domain.model.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

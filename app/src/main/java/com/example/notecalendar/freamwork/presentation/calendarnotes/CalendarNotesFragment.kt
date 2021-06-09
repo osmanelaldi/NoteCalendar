@@ -2,6 +2,7 @@ package com.example.notecalendar.freamwork.presentation.calendarnotes
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,6 +10,7 @@ import com.example.notecalendar.R
 import com.example.notecalendar.business.domain.model.Note
 import com.example.notecalendar.databinding.FragmentCalendarNotesBinding
 import com.example.notecalendar.freamwork.presentation.calendarnotes.state.CalendarNotesStateEvent
+import com.example.notecalendar.freamwork.presentation.noteinput.UpsertNoteFragment
 import com.example.notecalendar.freamwork.presentation.util.DF
 import com.example.notecalendar.freamwork.presentation.util.DateUtils
 import com.kizitonwose.calendarview.CalendarView
@@ -24,9 +26,9 @@ import java.util.*
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes), CalendarDayAdapterListener{
+class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes), CalendarDayAdapterListener, NoteListener{
 
-    private val notesAdapter = NotesAdapter()
+    private val notesAdapter = NotesAdapter(this)
     private val viewModel by viewModels<CalendarNotesViewModel>()
     private val calendarDayAdapter = CalendarDayAdapter(listener = this)
     private var calendarNotesBinding : FragmentCalendarNotesBinding? = null
@@ -84,13 +86,21 @@ class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes), Calend
         })
     }
 
-    override fun onDaySelected(notes: List<Note>) {
-        notesAdapter.updateItems(notes)
-    }
-
     private fun updateCalendarUI(notesWithDate : HashMap<String,ArrayList<Note>>?){
         calendarDayAdapter.updateCalendarNotes(notesWithDate ?: kotlin.run { hashMapOf() })
         calendarNotesBinding?.cvNotes?.notifyCalendarChanged()
     }
 
+    override fun onDaySelected(notes: List<Note>) {
+        notesAdapter.updateItems(notes)
+    }
+
+    override fun onDelete(note: Note) {
+        viewModel.setStateEvent(CalendarNotesStateEvent.DeleteNote(note))
+    }
+
+    override fun onEdit(note: Note) {
+        val bundle = bundleOf(UpsertNoteFragment.EDIT_NOTE to note)
+        findNavController().navigate(R.id.action_add_or_edit_note, bundle)
+    }
 }

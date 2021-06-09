@@ -44,13 +44,16 @@ object DateUtils {
 
     fun getDateWithFormat(dateStr : String, pattern : DF, toPattern : DF) : String{
         val simpleDateFormat = SimpleDateFormat(toPattern.format)
-        return simpleDateFormat.format(getDateTime(dateStr, pattern))
+        return simpleDateFormat.format(getDate(dateStr, pattern))
     }
 
-    fun getDateTime(dateStr : String, pattern: DF) : Date {
+    private fun getDate(dateStr : String, pattern: DF) : Date {
         val simpleDateFormat = SimpleDateFormat(pattern.format)
         return simpleDateFormat.parse(dateStr)
     }
+
+    fun getDateTime(dateStr: String, pattern: DF) = DateTime(getDate(dateStr,pattern))
+
 
 }
 

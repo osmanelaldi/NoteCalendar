@@ -23,6 +23,7 @@ import com.example.notecalendar.freamwork.presentation.util.DateUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.util.UUID
 
@@ -32,13 +33,13 @@ import java.util.UUID
 class UpsertNoteFragment : Fragment(R.layout.fragment_upsert) {
 
     companion object{
-        const val UPSERT_RESULT = "UPSERT_RESULT"
-        const val UPSERT_NOTE = "UPSERT_NOTE"
+        const val EDIT_NOTE = "EditNote"
     }
 
     private val subNoteAdapter = SubNoteAdapter()
-    private var selectedDate : LocalDateTime? = null
+    private var selectedDate : DateTime? = null
     private var upsertNoteBinding : FragmentUpsertBinding? = null
+    private var editNote : Note? = null
 
     private val viewModel by viewModels<UpsertNoteViewModel>()
 
@@ -46,6 +47,7 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_upsert) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         upsertNoteBinding = FragmentUpsertBinding.bind(view)
+        editNote = arguments?.getSerializable(EDIT_NOTE) as Note?
 
         upsertNoteBinding?.let { binding->
             binding.rvSubNote.adapter = subNoteAdapter
@@ -64,8 +66,21 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_upsert) {
                 if (MotionEvent.ACTION_UP == event.action) showDatePicker() // Instead of your Toast
                 false
             })
+            editNote?.let {
+                fillEditNote(binding,it)
+            }
         }
         subscribeObservers()
+    }
+
+    private fun fillEditNote(binding: FragmentUpsertBinding, note : Note){
+        binding.etTitle.setText(note.title)
+        binding.etDescription.setText(note.description)
+        binding.etDate.setText(note.date)
+        note.subNotes.forEach { subNote->
+            subNoteAdapter.addSubNote(subNote.note, subNote.comment)
+        }
+        selectedDate = DateUtils.getDateTime(note.date,DF.DATE_FORMAT)
     }
 
     private fun subscribeObservers(){
@@ -91,7 +106,7 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_upsert) {
                 val noteTitle = upsertNoteBinding?.etTitle?.text.toString()
                 val noteDescription = upsertNoteBinding?.etDescription?.text.toString()
                 val noteDate = DateUtils.getDateWithFormat(selectedDate!!.toDateTime(), DF.DATE_FORMAT)
-                val noteId = UUID.randomUUID().toString()
+                val noteId = editNote?.id ?: UUID.randomUUID().toString()
                 val note = Note(noteId,noteTitle,noteDescription,subNotesWrapper.subNotes,noteDate)
                 viewModel.setStateEvent(UpsertStateEvent.UpsertNote(note))
             }
@@ -106,7 +121,7 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_upsert) {
                     binding.etTitle.error = getString(R.string.note_should_not_be_empty)
                     false
                 }
-                binding.etDate.text.isNullOrEmpty() -> {
+                binding.etDate.text.isNullOrEmpty() && selectedDate != null-> {
                     binding.etDate.error = getString(R.string.date_should_note_be_empty)
                     false
                 }
@@ -122,12 +137,12 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_upsert) {
     private fun showDatePicker(){
         val listener = OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             TimePickerDialog(requireContext(), R.style.DatePickerTheme,TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-                selectedDate = LocalDateTime().withYear(year).withMonthOfYear(monthOfYear)
+                selectedDate = DateTime().withYear(year).withMonthOfYear(monthOfYear)
                     .withDayOfMonth(dayOfMonth).withHourOfDay(hour).withMinuteOfHour(minute)
                 upsertNoteBinding?.etDate?.setText( DateUtils.getDateWithFormat(selectedDate!!.toDateTime(),DF.DATE_FORMAT))
             }, 0, 0, false).show()
         }
-        val pickerDate = selectedDate ?: LocalDateTime.now()
+        val pickerDate = selectedDate ?: DateTime.now()
         DatePickerDialog(requireContext(), R.style.DatePickerTheme, listener,
             pickerDate.year,pickerDate.monthOfYear,pickerDate.dayOfMonth).show()
     }

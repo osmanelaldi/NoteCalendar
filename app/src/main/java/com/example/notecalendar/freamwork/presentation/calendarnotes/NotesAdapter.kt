@@ -56,6 +56,12 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
                 note.isExpanded = !note.isExpanded
                 notifyItemChanged(position)
             }
+            binding.btnEdit.setOnClickListener {
+                noteListener?.onEdit(note)
+            }
+            binding.btnDelete.setOnClickListener {
+                noteListener?.onDelete(note)
+            }
             if (note.subNotes.isNotEmpty())
                 attachSubNotes(holder, note.subNotes)
         }
