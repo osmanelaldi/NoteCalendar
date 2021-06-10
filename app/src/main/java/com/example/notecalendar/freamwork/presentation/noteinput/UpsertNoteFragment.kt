@@ -74,6 +74,7 @@ class UpsertNoteFragment : Fragment(R.layout.fragment_upsert) {
     }
 
     private fun fillEditNote(binding: FragmentUpsertBinding, note : Note){
+        binding.tvAddNote.text = getString(R.string.edit_note)
         binding.etTitle.setText(note.title)
         binding.etDescription.setText(note.description)
         binding.etDate.setText(note.date)
