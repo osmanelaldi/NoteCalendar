@@ -7,7 +7,6 @@ import com.example.notecalendar.business.domain.model.Note
 class FakeNoteNetworkDataSourceImpl
 constructor(
     private val notesData : HashMap<String,ArrayList<Note>>,
-    private val deletedNoteData : Note,
 ) : NoteNetworkDataSource{
     override suspend fun getNotes(startDate: String, endDate: String): List<Note> {
         val temp = arrayListOf<Note>()

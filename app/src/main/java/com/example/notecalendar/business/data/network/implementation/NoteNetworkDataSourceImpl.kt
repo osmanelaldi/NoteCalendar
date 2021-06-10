@@ -7,7 +7,7 @@ import com.example.notecalendar.freamwork.datasource.network.implementation.Note
 
 class NoteNetworkDataSourceImpl(private val noteNetworkService: NoteNetworkService) : NoteNetworkDataSource{
     override suspend fun getNotes(startDate: String, endDate: String): List<Note> {
-        return noteNetworkService.getNotes(startDate, endDate)
+        return noteNetworkService.getNotes("gt.$startDate","lt.$endDate")
 
     }
 

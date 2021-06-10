@@ -24,7 +24,7 @@ constructor(
     fun getNotes(stateEvent: StateEvent) : Flow<DataState<CalendarNotesViewState>?> = flow {
         val event = stateEvent as CalendarNotesStateEvent.GetNotes
         val apiResult = safeApiCall(IO){
-            noteNetworkDataSource.getNotes("gt.${event.startDate}","lt.${event.endDate}")
+            noteNetworkDataSource.getNotes(event.startDate,event.endDate)
         }
         val apiResponse = object : ApiResponseHandler<CalendarNotesViewState, List<Note>>(
             response = apiResult,

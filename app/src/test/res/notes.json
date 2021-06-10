@@ -1,0 +1,28 @@
+[
+  {
+    "id": "b0a38191-251f-4832-918c-b2872e4bb6a8",
+    "title": "Breakfast",
+    "description": "Team Breakfast",
+    "date": "14-06-2021 10:20",
+    "subNotes": []
+  },
+  {
+    "id": "99e8d7f9-b3c8-4d45-adbb-b40269a3ba2e",
+    "title": "Team Daily",
+    "description": "",
+    "date": "14-06-2021 11:00",
+    "subNotes": []
+  },
+  {
+    "id": "6e8e46e1-82f5-44bf-9845-043c06d870ba",
+    "title": "Planning",
+    "description": "Sprint planning",
+    "date": "15-06-2021 01:00",
+    "subNotes": [
+      {
+        "comment": "Mark the completed ones",
+        "note": "Current sprint jobs"
+      }
+    ]
+  }
+]

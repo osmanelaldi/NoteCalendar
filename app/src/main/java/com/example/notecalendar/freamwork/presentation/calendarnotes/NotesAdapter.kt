@@ -46,6 +46,8 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
             note.description?.let {
                 binding.tvNoteDescription.visibility = View.VISIBLE
                 binding.tvNoteDescription.text = note.description
+            }?: kotlin.run {
+                binding.tvNoteDescription.visibility = View.GONE
             }
             val expandedVisibility = if (note.isExpanded) View.VISIBLE else View.GONE
             binding.btnDelete.visibility = expandedVisibility
@@ -64,6 +66,8 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
             }
             if (note.subNotes.isNotEmpty())
                 attachSubNotes(holder, note.subNotes)
+            else
+                binding.llSubNote.removeAllViews()
         }
     }
 

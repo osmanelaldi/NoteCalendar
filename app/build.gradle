@@ -43,6 +43,10 @@ android {
         jvmTarget = Java.java_version
     }
 
+    sourceSets {
+        test.resources.srcDirs += 'src/test/res'
+    }
+
     testOptions {
         unitTests.all {
             useJUnitPlatform()
