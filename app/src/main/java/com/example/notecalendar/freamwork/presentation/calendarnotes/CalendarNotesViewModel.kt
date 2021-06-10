@@ -8,6 +8,8 @@ import com.example.notecalendar.business.interactors.GetNotes
 import com.example.notecalendar.freamwork.presentation.calendarnotes.state.CalendarNotesStateEvent
 import com.example.notecalendar.freamwork.presentation.calendarnotes.state.CalendarNotesViewState
 import com.example.notecalendar.freamwork.presentation.common.BaseViewModel
+import com.example.notecalendar.freamwork.presentation.util.DF
+import com.example.notecalendar.freamwork.presentation.util.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -48,6 +50,13 @@ constructor(
 
     private fun updateDeletedNote(note : Note){
         val update = getCurrentViewStateOrNew()
+        val date = DateUtils.getDateWithFormat(note.date, DF.DATE_FORMAT,DF.DATE_WITHOUT_HOUR_FORMAT)
+        update.notesWithDate?.let {notesWithDates->
+            notesWithDates[date]?.let { notes->
+                val temp = notes.filter { it.id != note.id }
+                notesWithDates[date] = temp as ArrayList<Note>
+            }
+        }
         update.deletedNote = note
         setViewState(update)
     }

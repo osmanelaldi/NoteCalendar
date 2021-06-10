@@ -89,9 +89,19 @@ class NotesAdapter(val noteListener: NoteListener? = null) : RecyclerView.Adapte
        }
     }
 
+    fun clear(){
+        differ.submitList(listOf())
+    }
+
     fun updateItems(notes : List<Note>){
         differ.submitList(notes)
-   }
+    }
+
+    fun deleteItem(note: Note){
+        val tem = differ.currentList.map { it } as ArrayList
+        tem.removeIf { it.id == note.id }
+        differ.submitList(tem)
+    }
 
     private fun getBackgroundColor(index : Int) : Int{
         return when{

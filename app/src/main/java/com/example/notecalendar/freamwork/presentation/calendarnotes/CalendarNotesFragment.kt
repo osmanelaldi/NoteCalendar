@@ -64,6 +64,7 @@ class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes), Calend
             binding.cvNotes.scrollToMonth(currentMonth)
             binding.cvNotes.monthScrollListener = object : MonthScrollListener{
                 override fun invoke(month: CalendarMonth) {
+                    notesAdapter.clear()
                     binding.vwCalendarHeader.tvDate.text = DateUtils.getDateWithFormat(DateUtils.getDateTime(month), DF.MONTH_YEAR_FORMAT)
                     searchNotes(month)
                 }
@@ -82,7 +83,12 @@ class CalendarNotesFragment : Fragment(R.layout.fragment_calendar_notes), Calend
 
     private fun subscribeObservers(){
         viewModel.viewState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            updateCalendarUI(it.notesWithDate)
+            it.deletedNote?.let { note->
+                notesAdapter.deleteItem(note)
+            }
+            it.notesWithDate?.let { notesWithDate->
+                updateCalendarUI(notesWithDate)
+            }
         })
     }
 
