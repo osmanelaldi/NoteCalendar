@@ -4,10 +4,10 @@ import java.io.Serializable
 
 data class Note(
     val id : String,
-    val title : String,
-    val description : String? = null,
-    val subNotes : List<SubNote>,
-    val date : String,
+    var title : String,
+    var description : String? = null,
+    var subNotes : List<SubNote>,
+    var date : String,
     @Transient var isExpanded : Boolean = false
 ) : Serializable
 
