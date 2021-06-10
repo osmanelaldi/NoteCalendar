@@ -17,7 +17,7 @@ class NoteNetworkDataSourceImpl(private val noteNetworkService: NoteNetworkServi
     }
 
     override suspend fun removeNote(note: Note): Any {
-       return noteNetworkService.removeNote(note.id)
+       return noteNetworkService.removeNote("eq.${note.id}")
     }
 
 
